@@ -19,6 +19,7 @@ class ServerlessImageAnalyzerPipelineStack(Stack):
         pipeline = pipelines.CodePipeline(
             self,
             "Pipeline",
+            publish_assets_in_parallel=False,
             synth=pipelines.ShellStep(
                 "Synth",
                 input=pipelines.CodePipelineSource.code_commit(repository, "main"),
