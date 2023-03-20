@@ -30,6 +30,6 @@ class ServerlessImageAnalyzerPipelineStack(Stack):
             )
         )
 
-        deploy = ServerlessImageAnalyzerPipelineStage(self, "Deploy")
+        deploy = ServerlessImageAnalyzerPipelineStage(self, "deploy")
         deploy_stage = pipeline.add_stage(deploy)
 
