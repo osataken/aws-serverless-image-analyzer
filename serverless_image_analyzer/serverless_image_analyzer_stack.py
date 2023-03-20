@@ -41,7 +41,11 @@ class ServerlessImageAnalyzerStack(Stack):
             self, 'serverless-image-analyzer-bucket',
             cors=[_s3.CorsRule(
                 allowed_headers=["*"],
-                allowed_methods=[_s3.HttpMethods.PUT, _s3.HttpMethods.GET, _s3.HttpMethods.HEAD],
+                allowed_methods=[
+                    _s3.HttpMethods.PUT, 
+                    _s3.HttpMethods.GET, 
+                    _s3.HttpMethods.HEAD
+                ],
                 allowed_origins=["*"])
             ]
         )
