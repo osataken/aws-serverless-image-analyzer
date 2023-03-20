@@ -22,7 +22,7 @@ class ServerlessImageAnalyzerStack(Stack):
     
     def generate_html(self) :
         # Read in the file
-        with open('src/static/index.html.template', 'r') as file :
+        with open('src/static/index.html', 'r') as file :
             filedata = file.read()
 
         # Replace the target string
