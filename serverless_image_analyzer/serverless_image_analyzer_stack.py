@@ -109,7 +109,8 @@ class ServerlessImageAnalyzerStack(Stack):
         cf_dist = _cf.Distribution(
             self, 'image-upload-dist',
             default_behavior=_cf.BehaviorOptions(
-                origin=_origins.S3Origin(image_upload_static_web_bucket))
+                origin=_origins.S3Origin(image_upload_static_web_bucket),
+                response_headers_policy=_cf.ResponseHeadersPolicy.CORS_ALLOW_ALL_ORIGINS)
         )
 
         CfnOutput(self, "Web URL", value=cf_dist.domain_name)
