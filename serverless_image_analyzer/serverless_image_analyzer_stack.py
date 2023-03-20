@@ -12,6 +12,7 @@ from aws_cdk import (
     aws_iam as _iam,
 )
 from constructs import Construct
+from cdk_dynamo_table_view import TableViewer
 
 
 class ServerlessImageAnalyzerStack(Stack):
@@ -19,6 +20,10 @@ class ServerlessImageAnalyzerStack(Stack):
     @property
     def presigned_url_api(self):
         return self._presigned_url_api
+
+    @property
+    def viewer_url(self):
+        return self._viewer_url
     
     def generate_html(self) :
         # Read in the file
@@ -118,5 +123,17 @@ class ServerlessImageAnalyzerStack(Stack):
         image_uploaded_bucket.grant_put(presigned_url_lambda)
         image_uploaded_bucket.add_event_notification(
             _s3.EventType.OBJECT_CREATED, s3_notification)
+
+
+        tv = TableViewer(
+            self, 'TableViewer',
+            title='Table Viewer',
+            table=image_metadata_table.table
+        )
+
+        self._viewer_url = CfnOutput(
+            self, 'TableViewerUrl',
+            value=tv.endpoint
+        )
 
         CfnOutput(self, "Web URL", value=cf_dist.domain_name)
