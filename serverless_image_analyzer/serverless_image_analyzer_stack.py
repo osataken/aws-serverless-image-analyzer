@@ -93,7 +93,9 @@ class ServerlessImageAnalyzerStack(Stack):
 
         _s3_deployment.BucketDeployment(
             self, "s3-deployment",
-            sources=[_s3_deployment.Source.data("index.html", self.generate_html())],
+            sources=[
+                _s3_deployment.Source.data("index.html", self.generate_html()),
+                _s3_deployment.Source.asset("src/static/favicon.ico")],
             destination_bucket=image_upload_static_web_bucket
         )
 
