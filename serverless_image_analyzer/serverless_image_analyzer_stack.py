@@ -16,6 +16,19 @@ from constructs import Construct
 
 class ServerlessImageAnalyzerStack(Stack):
 
+    @property
+    def presigned_url_api(self):
+        return self._presigned_url_api
+    
+    def generate_html(self) :
+        # Read in the file
+        with open('src/static/index.html.template', 'r') as file :
+            filedata = file.read()
+
+        # Replace the target string
+        filedata = filedata.replace('<<PRESIGNED_URL>>', self._presigned_url_api.url)
+        return filedata
+
     def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
@@ -53,7 +66,7 @@ class ServerlessImageAnalyzerStack(Stack):
             }
         )
 
-        _apigw.LambdaRestApi(
+        self._presigned_url_api = _apigw.LambdaRestApi(
             self, 'PresignedUrlEndpoint',
             handler=presigned_url_lambda,
             default_cors_preflight_options=_apigw.CorsOptions(
@@ -84,7 +97,8 @@ class ServerlessImageAnalyzerStack(Stack):
 
         _s3_deployment.BucketDeployment(
             self, "s3-deployment",
-            sources=[_s3_deployment.Source.asset("src/static")],
+            # sources=[_s3_deployment.Source.asset("src/static")],
+            sources=[_s3_deployment.Source.data("index.html", self.generate_html())],
             destination_bucket=image_upload_static_web_bucket
         )
 

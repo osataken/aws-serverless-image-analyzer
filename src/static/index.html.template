@@ -26,7 +26,7 @@
 
       /* ENTER YOUR ENDPOINT HERE */
 
-      const API_ENDPOINT = 'https://uhd4iaspw8.execute-api.ap-southeast-1.amazonaws.com/prod/' // e.g. https://ab1234ab123.execute-api.us-east-1.amazonaws.com/uploads
+      const API_ENDPOINT = '<<PRESIGNED_URL>>'
 
       new Vue({
         el: "#app",
