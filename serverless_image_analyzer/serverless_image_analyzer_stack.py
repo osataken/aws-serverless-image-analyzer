@@ -38,13 +38,15 @@ class ServerlessImageAnalyzerStack(Stack):
         )
 
         image_uploaded_bucket = _s3.Bucket(
-            self, 'serverless-image-analyzer-bucket',
+            self, 'img-upload-bucket',
             cors=[_s3.CorsRule(
                 allowed_headers=["*"],
                 allowed_methods=[
                     _s3.HttpMethods.PUT, 
                     _s3.HttpMethods.GET, 
-                    _s3.HttpMethods.HEAD
+                    _s3.HttpMethods.HEAD,
+                    _s3.HttpMethods.DELETE,
+                    _s3.HttpMethods.POST
                 ],
                 allowed_origins=["*"])
             ]
@@ -96,7 +98,7 @@ class ServerlessImageAnalyzerStack(Stack):
             _s3.EventType.OBJECT_CREATED, s3_notification)
 
         image_upload_static_web_bucket = _s3.Bucket(
-            self, 'image-upload-static-web-bucket',
+            self, 'static-web-bucket',
         )
 
         _s3_deployment.BucketDeployment(
