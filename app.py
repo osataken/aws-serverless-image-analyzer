@@ -8,7 +8,7 @@ from serverless_image_analyzer.pipeline_stack import ServerlessImageAnalyzerPipe
 
 
 app = cdk.App()
-# ServerlessImageAnalyzerStack(app, "ServerlessImageAnalyzerStack")
-ServerlessImageAnalyzerPipelineStack(app, "ServerlessImageAnalyzerPipelineStack")
+ServerlessImageAnalyzerStack(app, "ServerlessImageAnalyzerStack")
+# ServerlessImageAnalyzerPipelineStack(app, "ServerlessImageAnalyzerPipelineStack")
 
 app.synth()
