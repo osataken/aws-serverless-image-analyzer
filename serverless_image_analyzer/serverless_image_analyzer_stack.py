@@ -128,7 +128,7 @@ class ServerlessImageAnalyzerStack(Stack):
         tv = TableViewer(
             self, 'TableViewer',
             title='Table Viewer',
-            table=image_metadata_table.table
+            table=image_metadata_table
         )
 
         self._viewer_url = CfnOutput(
