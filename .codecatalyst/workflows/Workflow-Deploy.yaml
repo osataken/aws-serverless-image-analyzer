@@ -25,7 +25,7 @@ Actions:
     Identifier: aws/cdk-deploy@v1
     Configuration:
       Region: ap-southeast-1
-      StackName: ServerlessImageAnalyzer-Dev
+      StackName: ServerlessImageAnalyzerStack
     Environment:
       Connections:
         - Role: CodeCatalystPreviewDevelopmentAdministrator-jd4rpt
