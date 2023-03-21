@@ -1,0 +1,38 @@
+Name: Workflow_6667
+SchemaVersion: "1.0"
+
+# Optional - Set automatic triggers.
+Triggers:
+  - Type: Push
+    Branches:
+      - main
+
+# Required - Define action configurations.
+Actions:
+  Bootstrap:
+    Identifier: aws/cdk-bootstrap@v1
+    Configuration:
+      Region: ap-southeast-1
+    Environment:
+      Connections:
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-jd4rpt
+          Name: "578962264463"
+      Name: dev-env
+    Inputs:
+      Sources:
+        - WorkflowSource
+  Deploy-Dev:
+    Identifier: aws/cdk-deploy@v1
+    Configuration:
+      Region: ap-southeast-1
+      StackName: ServerlessImageAnalyzer-Dev
+    Environment:
+      Connections:
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-jd4rpt
+          Name: "578962264463"
+      Name: dev-env
+    DependsOn:
+      - Bootstrap
+    Inputs:
+      Sources:
+        - WorkflowSource
