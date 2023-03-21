@@ -60,4 +60,5 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: pip install -r requirements-dev.txt 
-        - Run: pytest >> report.xml
+        - Run: pytest --junitxml=test_unit_results.xml --cov-report xml:test_unit_coverage.xml --cov=. tests/unit
+        - Run: echo "No test coverage step"
