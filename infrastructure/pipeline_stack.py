@@ -5,8 +5,9 @@ from aws_cdk import (
     pipelines as pipelines
 )
 
-from serverless_image_analyzer.pipeline_stage import ServerlessImageAnalyzerPipelineStage
+from infrastructure.pipeline_stage import ServerlessImageAnalyzerPipelineStage
 
+# CodePipeline Stack
 class ServerlessImageAnalyzerPipelineStack(Stack):
     def __init__ (self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)

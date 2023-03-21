@@ -3,11 +3,12 @@ import os
 
 import aws_cdk as cdk
 
-from serverless_image_analyzer.serverless_image_analyzer_stack import ServerlessImageAnalyzerStack
-from serverless_image_analyzer.pipeline_stack import ServerlessImageAnalyzerPipelineStack
-
+from infrastructure.serverless_image_analyzer_stack import ServerlessImageAnalyzerStack
+from infrastructure.pipeline_stack import ServerlessImageAnalyzerPipelineStack
 
 app = cdk.App()
+
+# Uncomment/Comment below code to run the pipeline or the stack respectively.
 ServerlessImageAnalyzerStack(app, "ServerlessImageAnalyzerStack")
 # ServerlessImageAnalyzerPipelineStack(app, "ServerlessImageAnalyzerPipelineStack")
 
