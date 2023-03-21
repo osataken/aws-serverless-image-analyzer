@@ -1,9 +1,10 @@
 
-# Welcome to your CDK Python project!
+# Welcome to Serverless Image Analyzer on AWS!
+This repository demonstrate how to develop a serverless web application for uploading (JPEG) image and extract the image attributes/metadata using Amazon Rekognition. The result will be stored on Amazon DynamoDB.
 
-This is a blank project for CDK development with Python.
+----
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+# Install Instruction
 
 This project is set up like a standard Python project.  The initialization
 process also creates a virtualenv within this project, stored under the `.venv`
