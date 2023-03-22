@@ -2,6 +2,9 @@
 # Welcome to Serverless Image Analyzer on AWS!
 This repository demonstrate how to develop a serverless web application for uploading (JPEG) image and extract the image attributes/metadata using Amazon Rekognition. The result will be stored on Amazon DynamoDB.
 
+## High Level Architecture
+![](docs/img/high_level_architecture.png)
+
 ----
 
 # Install Instruction
