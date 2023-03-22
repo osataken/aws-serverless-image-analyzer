@@ -69,6 +69,8 @@ with
 ServerlessImageAnalyzerPipelineStack(app, "ServerlessImageAnalyzerPipelineStack")
 ```
 
+Run "cdk deploy" to create a CI/CD pipeline to deploy this application into your AWS account.
+
 ### 2. CodeCatalyst
 You can fork this repository, create a CodeCatalyst project and link the forked repository to your project.
 The "Workflow-Deploy.yaml" under ".codecatalyst" folder is an example of the workflow (CI/CD pipeline) that you could use.
