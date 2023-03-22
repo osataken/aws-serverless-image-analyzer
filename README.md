@@ -8,7 +8,6 @@ This repository demonstrate how to develop a serverless web application for uplo
 ----
 
 # Install Instruction
-
 This project is set up like a standard Python project.  The initialization
 process also creates a virtualenv within this project, stored under the `.venv`
 directory.  To create the virtualenv it assumes that there is a `python3`
@@ -50,6 +49,41 @@ $ cdk synth
 To add additional dependencies, for example other CDK libraries, just add
 them to your `setup.py` file and rerun the `pip install -r requirements.txt`
 command.
+
+----
+
+## Options for creating CI/CD pipeline 
+You can provision this application infrastructure by running "cdk deploy" command.
+But you could also create CI/CD pipeline using the following options.
+
+### 1. CodePipeline 
+you could also create a CI/CD pipeline by replace the following code in app.py
+
+```python
+ServerlessImageAnalyzerStack(app, "ServerlessImageAnalyzerStack")
+```
+
+with
+
+```python
+ServerlessImageAnalyzerPipelineStack(app, "ServerlessImageAnalyzerPipelineStack")
+```
+
+### 2. CodeCatalyst
+You can fork this repository, create a CodeCatalyst project and link the forked repository to your project.
+The "Workflow-Deploy.yaml" under ".codecatalyst" folder is an example of the workflow (CI/CD pipeline) that you could use.
+
+You can create your own workflow on CodeCatalyst console or modify this file to match your configuration.
+```yaml
+Configuration:
+      Region: <<your preferred region>>
+    Environment:
+      Connections:
+        - Role: <<your created CodeCatalyst Role>>
+          Name: <<your AWS account ID>>
+```
+
+----
 
 ## Useful commands
 
