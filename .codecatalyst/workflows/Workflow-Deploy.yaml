@@ -1,0 +1,65 @@
+Name: Workflow-Deploy
+SchemaVersion: "1.0"
+
+# Optional - Set automatic triggers.
+Triggers:
+  - Type: Push
+    Branches:
+      - main
+
+# Required - Define action configurations.
+Actions:
+  Bootstrap:
+    Identifier: aws/cdk-bootstrap@v1
+    Configuration:
+      Region: ap-southeast-1
+    Environment:
+      Connections:
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-jd4rpt
+          Name: "578962264463"
+      Name: dev-env
+    DependsOn:
+      - Test-Infrastructure
+    Inputs:
+      Sources:
+        - WorkflowSource
+  Deploy-Dev:
+    Identifier: aws/cdk-deploy@v1
+    Configuration:
+      Region: ap-southeast-1
+      StackName: ServerlessImageAnalyzerStack
+    Environment:
+      Connections:
+        - Role: CodeCatalystPreviewDevelopmentAdministrator-jd4rpt
+          Name: "578962264463"
+      Name: dev-env
+    DependsOn:
+      - Bootstrap
+    Inputs:
+      Sources:
+        - WorkflowSource
+  Test-Infrastructure:
+    # Identifies the action. Do not modify this value.
+    Identifier: aws/managed-test@v1
+
+    # Specifies the source and/or artifacts to pass to the action as input.
+    Inputs:
+      # Optional
+      Sources:
+        - WorkflowSource # This specifies that the action requires this Workflow as a source
+
+    Outputs:
+      # Optional; Automatically discover reports for popular test frameworks
+      AutoDiscoverReports:
+        Enabled: true
+        # Use as prefix for the report files
+        ReportNamePrefix: rpt
+
+    # Defines the action's properties.
+    Configuration:
+      # Required - Steps are sequential instructions that run shell commands
+      Steps:
+        - Run: pip install -r requirements.txt 
+        - Run: pip install -r requirements-dev.txt 
+        - Run: pytest --junitxml=test_unit_results.xml --cov-report xml:test_unit_coverage.xml --cov=. tests/unit
+        - Run: echo "No test coverage step"
