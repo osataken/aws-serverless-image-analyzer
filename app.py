@@ -9,7 +9,7 @@ from infrastructure.pipeline_stack import ServerlessImageAnalyzerPipelineStack
 app = cdk.App()
 
 # Uncomment/Comment below code to run the pipeline or the stack respectively.
-# ServerlessImageAnalyzerStack(app, "ServerlessImageAnalyzerStack")
-ServerlessImageAnalyzerPipelineStack(app, "ServerlessImageAnalyzerPipelineStack")
+ServerlessImageAnalyzerStack(app, "ServerlessImageAnalyzerStack")
+# ServerlessImageAnalyzerPipelineStack(app, "ServerlessImageAnalyzerPipelineStack")
 
 app.synth()
