@@ -67,9 +67,8 @@ def lambda_handler(event, context):
 
         # Write file to Image Metadata Bucket
         file_name = key + ".txt"
-        s3_path = img_metadata_bucket + "/" + file_name
         s3 = boto3.resource("s3")
-        s3.Bucket(img_metadata_bucket).put_object(Key=s3_path, Body=item.encode('utf-8'))
+        s3.Bucket(img_metadata_bucket).put_object(Key=file_name, Body=str(item).encode('utf-8'))
 
         return 'Success'
     except Exception as e:
