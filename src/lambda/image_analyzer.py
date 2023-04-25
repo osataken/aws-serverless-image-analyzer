@@ -14,6 +14,7 @@ dynamo_client = boto3.client('dynamodb')
 
 # Get the table name from the Lambda Environment Variable
 table_name = os.environ['TABLE_NAME']
+img_metadata_bucket = os.environ['IMG_METADATA_BUCKET']
 
 # --------------- Helper Functions to call Rekognition APIs ------------------
 
@@ -63,6 +64,12 @@ def lambda_handler(event, context):
         table = boto3.resource('dynamodb').Table(table_name)
         item={'id':key, 'DateTime':timestamp, 'Labels':labels, 'Text':textDetections}
         table.put_item(Item=item)
+
+        # Write file to Image Metadata Bucket
+        file_name = key + ".txt"
+        s3_path = img_metadata_bucket + "/" + file_name
+        s3 = boto3.resource("s3")
+        s3.Bucket(img_metadata_bucket).put_object(Key=s3_path, Body=item)
 
         return 'Success'
     except Exception as e:

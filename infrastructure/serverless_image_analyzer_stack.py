@@ -47,6 +47,10 @@ class ServerlessImageAnalyzerStack(Stack):
             ]
         )
 
+        image_metadata_bucket = _s3.Bucket(
+            self, 'img-metadata-bucket'
+        )
+
         image_metadata_table = _ddb.Table(
             self, 'ResultsTable',
             partition_key={'name': 'id', 'type': _ddb.AttributeType.STRING}
@@ -59,6 +63,7 @@ class ServerlessImageAnalyzerStack(Stack):
             handler='image_analyzer.lambda_handler',
             environment={
                 'TABLE_NAME': image_metadata_table.table_name,
+                'IMG_METADATA_BUCKET': image_metadata_bucket.bucket_name
             }
         )
 
@@ -114,6 +119,8 @@ class ServerlessImageAnalyzerStack(Stack):
         image_metadata_table.grant_read_write_data(image_analyzer_lambda)
 
         image_uploaded_bucket.grant_read(image_analyzer_lambda)
+        image_metadata_bucket.grant_put(image_analyzer_lambda)
+
         image_uploaded_bucket.grant_put(presigned_url_lambda)
         image_uploaded_bucket.add_event_notification(
             _s3.EventType.OBJECT_CREATED, s3_notification)
