@@ -9,7 +9,7 @@ def test_infrastructure_created():
     stack = ServerlessImageAnalyzerStack(app, "serverless-image-analyzer")
     template = assertions.Template.from_stack(stack)
 
-    template.resource_count_is("AWS::S3::Bucket", 2)
+    template.resource_count_is("AWS::S3::Bucket", 3)
     template.resource_count_is("AWS::Lambda::Function", 4)
     template.resource_count_is("AWS::DynamoDB::Table", 1)
     template.resource_count_is("AWS::CloudFront::Distribution", 1)
