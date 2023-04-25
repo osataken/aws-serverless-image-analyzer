@@ -41,16 +41,16 @@ def lambda_handler(event, context):
 
     try:
         # Call rekognition DetectText API to detect Text in S3 object.
-        response = detect_text(bucket, key)
-        textDetections = [text['DetectedText'] for text in response['TextDetections']]
+        response_text = detect_text(bucket, key)
+        textDetections = [text['DetectedText'] for text in response_text['TextDetections']]
 
         # Log text detected.
         # for text in textDetections:
         #    print (text)
 
         # Call rekognition DetectLabels API to detect labels in S3 object.
-        response = detect_labels(bucket, key)
-        labels = [{label_prediction['Name']: Decimal(str(label_prediction['Confidence']))} for label_prediction in response['Labels']]
+        response_label = detect_labels(bucket, key)
+        labels = [{label_prediction['Name']: Decimal(str(label_prediction['Confidence']))} for label_prediction in response_label['Labels']]
         
         # Log labels detected.
         # for label in labels:
@@ -68,7 +68,7 @@ def lambda_handler(event, context):
         # Write file to Image Metadata Bucket
         file_name = key + ".txt"
         s3 = boto3.resource("s3")
-        s3.Bucket(img_metadata_bucket).put_object(Key=file_name, Body=str(item).encode('utf-8'))
+        s3.Bucket(img_metadata_bucket).put_object(Key=file_name, Body=str(response_label).encode('utf-8'))
 
         return 'Success'
     except Exception as e:
