@@ -1,6 +1,7 @@
 from aws_cdk import (
     Stack,
     CfnOutput,
+    Duration,
     aws_lambda as _lambda,
     aws_apigateway as _apigw,
     aws_s3 as _s3,
@@ -61,6 +62,7 @@ class ServerlessImageAnalyzerStack(Stack):
             runtime=_lambda.Runtime.PYTHON_3_8,
             code=_lambda.Code.from_asset('src/lambda'),
             handler='image_analyzer.lambda_handler',
+            timeout=Duration.seconds(60),
             environment={
                 'TABLE_NAME': image_metadata_table.table_name,
                 'IMG_METADATA_BUCKET': image_metadata_bucket.bucket_name
